@@ -1,4 +1,4 @@
-package com.practice.myteams.ui.notifications
+package com.practice.myteams.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
