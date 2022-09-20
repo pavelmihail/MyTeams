@@ -1,5 +1,6 @@
 package com.practice.myteams.api
 
+import com.practice.myteams.data.TeamRespose
 import retrofit2.Response
 import retrofit2.http.GET
 interface MyTeamsAPI {

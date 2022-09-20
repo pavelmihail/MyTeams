@@ -1,4 +1,4 @@
-package com.practice.myteams.api
+package com.practice.myteams.data
 
 data class Team(
     val ACTIV: Boolean,

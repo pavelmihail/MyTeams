@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.practice.myteams.api.Team
-import com.practice.myteams.api.TeamRespose
+import com.practice.myteams.data.Team
 import com.practice.myteams.databinding.ItemTeamCardBinding
 
 class TeamListAdapter(private val fragment: Fragment) :
