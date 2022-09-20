@@ -4,40 +4,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.practice.myteams.databinding.FragmentTeamsBinding
-import com.practice.myteams.viewmodel.DashboardViewModel
+import com.practice.myteams.viewmodel.TeamsViewModel
+import com.practice.myteams.views.adapters.TeamListAdapter
 
 class TeamsFragment : Fragment() {
 
-    private var _binding: FragmentTeamsBinding? = null
+    private lateinit var binding: FragmentTeamsBinding
+    private val viewModel: TeamsViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        _binding = FragmentTeamsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentTeamsBinding.inflate(inflater, container, false)
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        //setup recycleView
+        binding.rvTeamsList.layoutManager = LinearLayoutManager(requireActivity())
+        val teamListAdapter = TeamListAdapter(this)
+        binding.rvTeamsList.adapter = teamListAdapter
+
+        if (viewModel.teams != null) {
+            println("s a ajuns si aici")
+            teamListAdapter.teams = viewModel.teams?.DATA!!
         }
-        return root
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
     }
 }

@@ -2,4 +2,7 @@
     <string name="app_name">MyTeams</string>
     <string name="title_players">Players</string>
     <string name="title_teams">Teams</string>
+
+    <string name="no_teams_added_yet">Momentan nu este adaugata nici o echipa</string>
+    <string name="no_players_added_yet">Momentan nu este adaugat nici un jucator</string>
 </resources>

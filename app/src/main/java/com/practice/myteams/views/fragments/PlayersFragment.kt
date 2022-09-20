@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.practice.myteams.databinding.FragmentPlayersBinding
-import com.practice.myteams.viewmodel.HomeViewModel
+import com.practice.myteams.viewmodel.PlayersViewModel
 
 class PlayersFragment : Fragment() {
 
@@ -23,14 +23,14 @@ class PlayersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val playersViewModel =
+            ViewModelProvider(this).get(PlayersViewModel::class.java)
 
         _binding = FragmentPlayersBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        playersViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
