@@ -53,9 +53,4 @@ class TeamListAdapter(private val fragment: Fragment) :
     override fun getItemCount(): Int {
         return teams.size
     }
-
-    fun teamList(list: List<Team>) {
-        teams = list
-        notifyDataSetChanged()
-    }
 }

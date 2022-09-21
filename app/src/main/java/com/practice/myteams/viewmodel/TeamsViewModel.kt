@@ -6,28 +6,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.retrofitcrashcourse.RetrofitInstance.api
-import com.practice.myteams.data.TeamRespose
+import com.practice.myteams.data.TeamResponse
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-enum class TeamApiStatus { LOADING, ERROR, DONE }
-
 class TeamsViewModel : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
-    var liveData = MutableLiveData<TeamRespose>()
+    var liveData = MutableLiveData<TeamResponse>()
 
-    // Internally, we use a MutableLiveData, because we will be updating the List of MarsPhoto
-    // with new values
-    var teams: TeamRespose? = null
-
-    fun getLiveDataObserver(): MutableLiveData<TeamRespose> {
+    fun getLiveDataObserver(): MutableLiveData<TeamResponse> {
         return liveData
     }
+
     init {
         getTeams()
     }
+
     //    calls and error handling
     private fun getTeams() {
         viewModelScope.launch {
@@ -46,8 +42,6 @@ class TeamsViewModel : ViewModel() {
                 Log.e(TAG, "Response not successful")
             }
         }
-
-
     }
 }
 

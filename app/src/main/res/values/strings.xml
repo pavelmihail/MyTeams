@@ -5,4 +5,6 @@
 
     <string name="no_teams_added_yet">Momentan nu este adaugata nici o echipa</string>
     <string name="no_players_added_yet">Momentan nu este adaugat nici un jucator</string>
+
+    <string name="team_id">ID Echipa</string>
 </resources>
