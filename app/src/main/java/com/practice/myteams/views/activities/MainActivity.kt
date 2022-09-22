@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.practice.myteams.R
 import com.practice.myteams.databinding.ActivityMainBinding
+import com.practice.myteams.views.dialogs.PlayerDialog
 import com.practice.myteams.views.dialogs.TeamDialog
 import retrofit2.http.Tag
 
@@ -27,7 +28,9 @@ class MainActivity : AppCompatActivity() {
     private var isPlayersFragmentOn = false
     private var isTeamsFragmentOn = false
 
-    private lateinit var dialog: DialogFragment
+    private var dialogTeam =  TeamDialog()
+    private var dialogPlayer =  PlayerDialog()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,20 +61,19 @@ class MainActivity : AppCompatActivity() {
                 isPlayersFragmentOn = false
                 isTeamsFragmentOn = true
             }
-
         }
 
         binding.fab.setOnClickListener{
-            dialog = TeamDialog()
-            dialog.show(supportFragmentManager, dialog.tag)
-//            if (isPlayersFragmentOn){
+            if (isPlayersFragmentOn){
+                dialogPlayer.show(supportFragmentManager, dialogPlayer.tag)
 //                val intent = Intent(this, AddEditPlayerActivity::class.java)
 //                startActivity(intent)
-//            }
-//            if(isTeamsFragmentOn){
+            }
+            if(isTeamsFragmentOn){
+                dialogTeam.show(supportFragmentManager, dialogTeam.tag)
 //                val intent = Intent(this, AddEditTeamActivity::class.java)
 //                startActivity(intent)
-//            }
+            }
         }
     }
 }

@@ -11,4 +11,10 @@
     <string name="team_add_text">Nume Echipa</string>
     <string name="team_add_btn">Adauga Echipa</string>
     <string name="team_add_title">Adauga Echipa</string>
+
+    <string name="player_add_last_name">Nume Jucator</string>
+    <string name="player_add_first_name">Prenume Jucator</string>
+    <string name="player_add_birth_date">Data Nastere</string>
+    <string name="player_add_btn">Adauga Jucator</string>
+    <string name="player_add_title">Adauga Jucator</string>
 </resources>

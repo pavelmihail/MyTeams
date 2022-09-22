@@ -5,14 +5,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.plcoding.retrofitcrashcourse.RetrofitInstance.api
+import com.plcoding.retrofitcrashcourse.RetrofitInstance
+import com.practice.myteams.data.PlayerTransmit
 import com.practice.myteams.data.PostResponse
 import com.practice.myteams.data.TeamTransmit
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-class TeamDialogViewModel: ViewModel() {
+class PlayerDialogViewModel: ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
     private var liveData = MutableLiveData<PostResponse>()
@@ -23,10 +24,10 @@ class TeamDialogViewModel: ViewModel() {
     }
 
     //    calls and error handling
-    fun postTeam(teamPost: TeamTransmit) {
+    fun postPlayer(playerPost: PlayerTransmit) {
         viewModelScope.launch {
             val response = try {
-                api.postTeam(teamPost)
+                RetrofitInstance.api.postPlayer(playerPost)
             } catch (e: IOException) {
                 Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
                 return@launch
@@ -36,8 +37,9 @@ class TeamDialogViewModel: ViewModel() {
             }
             if (response.isSuccessful && response.body() != null) {
                 liveData.postValue(response.body())
-                api.getTeam()
+                RetrofitInstance.api.getPlayers()
             } else {
+                println(response.body())
                 Log.e(ContentValues.TAG, "Response not successful")
             }
         }

@@ -1,9 +1,6 @@
 package com.practice.myteams.api
 
-import com.practice.myteams.data.PlayerResponse
-import com.practice.myteams.data.TeamPostResponse
-import com.practice.myteams.data.TeamResponse
-import com.practice.myteams.data.TeamTrasmit
+import com.practice.myteams.data.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,9 +13,12 @@ interface MyTeamsAPI {
     suspend fun getTeam(): Response<TeamResponse>
 
     @POST("api/android/echipemihail")
-    suspend fun postTeam(@Body teamTransmit: TeamTrasmit): Response<TeamPostResponse>
+    suspend fun postTeam(@Body teamTransmit: TeamTransmit): Response<PostResponse>
 
     //functii jucatori
     @GET("api/android/jucatorimihail")
     suspend fun getPlayers(): Response<PlayerResponse>
+
+    @POST("api/android/jucatorimihail")
+    suspend fun postPlayer(@Body playerTransmit: PlayerTransmit): Response<PostResponse>
 }

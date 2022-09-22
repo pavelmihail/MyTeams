@@ -10,14 +10,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.practice.myteams.R
+import com.practice.myteams.data.PlayerTransmit
 import com.practice.myteams.data.TeamTransmit
-import com.practice.myteams.viewmodel.TeamDialogViewModel
+import com.practice.myteams.viewmodel.PlayerDialogViewModel
 
+class PlayerDialog: DialogFragment() {
 
-class TeamDialog : DialogFragment() {
-
-    private val viewModel: TeamDialogViewModel by viewModels()
-
+    private val viewModel: PlayerDialogViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,20 +24,28 @@ class TeamDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.dialog_add_team, container, false)
+        return inflater.inflate(R.layout.dialog_add_player, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sendButton = view.findViewById<Button>(R.id.btn_add_team)
-        val teamName = view.findViewById<MaterialAutoCompleteTextView>(R.id.team_name)
-        val addTeam = TeamTransmit("")
+        val sendButton = view.findViewById<Button>(R.id.btn_add_player)
+        val playerLastName = view.findViewById<MaterialAutoCompleteTextView>(R.id.last_name_player)
+        val playerFistName = view.findViewById<MaterialAutoCompleteTextView>(R.id.first_name_player)
+        val playerBirthDate = view.findViewById<MaterialAutoCompleteTextView>(R.id.birth_date)
+        val teamId = view.findViewById<MaterialAutoCompleteTextView>(R.id.id_team)
+
+        val addPlayer = PlayerTransmit("", "", "", 1)
 
 
         sendButton.setOnClickListener{
-            addTeam.DENUMIRE = teamName.text.toString()
-            viewModel.postTeam(addTeam)
+            addPlayer.NUME = playerLastName.text.toString()
+            addPlayer.PRENUME = playerFistName.text.toString()
+            addPlayer.DATA_NASTERE = playerBirthDate.text.toString()
+            addPlayer.ID_ECHIPA = teamId.text.toString().toInt()
+
+            viewModel.postPlayer(addPlayer)
         }
 
         viewModel.getLiveDataObserver().observe(
@@ -60,10 +67,4 @@ class TeamDialog : DialogFragment() {
             }
         }
     }
-
-    companion object {
-        const val TAG = "PurchaseConfirmationDialog"
-    }
-
-
 }

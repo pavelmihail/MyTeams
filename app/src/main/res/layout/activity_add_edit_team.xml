@@ -7,7 +7,7 @@
     tools:context=".views.activities.AddEditTeamActivity">
 
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:id="@+id/name_team"
+        android:id="@+id/last_name_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -16,14 +16,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_team_btn"
+        android:id="@+id/btn_add_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/team_add_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_team" />
+        app:layout_constraintTop_toBottomOf="@+id/last_name_player" />
 
     <TextView
         android:id="@+id/textView"
