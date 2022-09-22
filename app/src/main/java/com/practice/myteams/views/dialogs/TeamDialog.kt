@@ -13,7 +13,6 @@ import com.practice.myteams.R
 import com.practice.myteams.data.TeamTransmit
 import com.practice.myteams.viewmodel.TeamDialogViewModel
 
-
 class TeamDialog : DialogFragment() {
 
     private val viewModel: TeamDialogViewModel by viewModels()
@@ -36,9 +35,19 @@ class TeamDialog : DialogFragment() {
         val addTeam = TeamTransmit("")
 
 
-        sendButton.setOnClickListener{
-            addTeam.DENUMIRE = teamName.text.toString()
-            viewModel.postTeam(addTeam)
+        sendButton.setOnClickListener {
+            if (teamName.text.isNotEmpty()) {
+                addTeam.DENUMIRE = teamName.text.toString()
+
+                viewModel.postTeam(addTeam)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Nu ai completat toate spatiile",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
         }
 
         viewModel.getLiveDataObserver().observe(
@@ -50,8 +59,8 @@ class TeamDialog : DialogFragment() {
                     "Echipa a fost postata cu succes!",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+                dialog?.dismiss()
+            } else {
                 Toast.makeText(
                     requireContext(),
                     "A aparut o eroare",
@@ -60,10 +69,4 @@ class TeamDialog : DialogFragment() {
             }
         }
     }
-
-    companion object {
-        const val TAG = "PurchaseConfirmationDialog"
-    }
-
-
 }

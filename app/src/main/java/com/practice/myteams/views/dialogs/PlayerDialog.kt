@@ -11,10 +11,9 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.practice.myteams.R
 import com.practice.myteams.data.PlayerTransmit
-import com.practice.myteams.data.TeamTransmit
 import com.practice.myteams.viewmodel.PlayerDialogViewModel
 
-class PlayerDialog: DialogFragment() {
+class PlayerDialog : DialogFragment() {
 
     private val viewModel: PlayerDialogViewModel by viewModels()
 
@@ -39,13 +38,26 @@ class PlayerDialog: DialogFragment() {
         val addPlayer = PlayerTransmit("", "", "", 1)
 
 
-        sendButton.setOnClickListener{
-            addPlayer.NUME = playerLastName.text.toString()
-            addPlayer.PRENUME = playerFistName.text.toString()
-            addPlayer.DATA_NASTERE = playerBirthDate.text.toString()
-            addPlayer.ID_ECHIPA = teamId.text.toString().toInt()
+        sendButton.setOnClickListener {
+            if (playerLastName.text.isNotEmpty() &&
+                playerFistName.text.isNotEmpty() &&
+                playerBirthDate.text.isNotEmpty() &&
+                teamId.text.isNotEmpty()
+            ) {
+                addPlayer.NUME = playerLastName.text.toString()
+                addPlayer.PRENUME = playerFistName.text.toString()
+                addPlayer.DATA_NASTERE = playerBirthDate.text.toString()
+                addPlayer.ID_ECHIPA = teamId.text.toString().toInt()
 
-            viewModel.postPlayer(addPlayer)
+                viewModel.postPlayer(addPlayer)
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Nu ai completat toate spatiile",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         viewModel.getLiveDataObserver().observe(
@@ -57,8 +69,8 @@ class PlayerDialog: DialogFragment() {
                     "Echipa a fost postata cu succes!",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+                dialog?.dismiss()
+            } else {
                 Toast.makeText(
                     requireContext(),
                     "A aparut o eroare",
