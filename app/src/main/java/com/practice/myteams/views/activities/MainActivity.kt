@@ -1,11 +1,13 @@
 package com.practice.myteams.views.activities
 
-import android.content.ContentValues.TAG
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -13,7 +15,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.practice.myteams.R
 import com.practice.myteams.databinding.ActivityMainBinding
-import com.practice.myteams.views.fragments.PlayersFragment
+import com.practice.myteams.views.dialogs.TeamDialog
+import retrofit2.http.Tag
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private val TEAMS_DESTINATION = "Teams"
     private var isPlayersFragmentOn = false
     private var isTeamsFragmentOn = false
+
+    private lateinit var dialog: DialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         //check what fragment is displayed
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.label == PLAYERS_DESTINATION){
                 isPlayersFragmentOn = true
                 isTeamsFragmentOn = false
@@ -57,16 +62,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener{
-            if (isPlayersFragmentOn){
-                val intent = Intent(this, AddEditPlayerActivity::class.java)
-                startActivity(intent)
-            }
-            if(isTeamsFragmentOn){
-                val intent = Intent(this, AddEditTeamActivity::class.java)
-                startActivity(intent)
-            }
+            dialog = TeamDialog()
+            dialog.show(supportFragmentManager, dialog.tag)
+//            if (isPlayersFragmentOn){
+//                val intent = Intent(this, AddEditPlayerActivity::class.java)
+//                startActivity(intent)
+//            }
+//            if(isTeamsFragmentOn){
+//                val intent = Intent(this, AddEditTeamActivity::class.java)
+//                startActivity(intent)
+//            }
         }
-
-
     }
 }

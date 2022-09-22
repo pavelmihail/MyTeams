@@ -10,4 +10,5 @@
 
     <string name="team_add_text">Nume Echipa</string>
     <string name="team_add_btn">Adauga Echipa</string>
+    <string name="team_add_title">Adauga Echipa</string>
 </resources>
