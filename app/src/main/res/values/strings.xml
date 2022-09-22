@@ -7,4 +7,7 @@
     <string name="no_players_added_yet">Momentan nu este adaugat nici un jucator</string>
 
     <string name="team_id">ID Echipa</string>
+
+    <string name="team_add_text">Nume Echipa</string>
+    <string name="team_add_btn">Adauga Echipa</string>
 </resources>
