@@ -5,7 +5,7 @@ data class Player(
     val DATA_CREARE: String,
     val DATA_MODIFICARE: Any,
     val DATA_NASTERE: String,
-    val ECHIPA: Team,
+    val ECHIPA: Team?,
     val ID_ECHIPA: Int,
     val ID_JUCATOR: Int,
     val NUME: String,

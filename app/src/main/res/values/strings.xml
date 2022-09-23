@@ -17,10 +17,10 @@
     <string name="player_add_first_name">Prenume Jucator</string>
     <string name="player_add_birth_date">Data Nastere</string>
     <string name="player_add_btn">Adauga Jucator</string>
-    <string name="player_modify_btn">Adauga Jucator</string>
+    <string name="player_modify_btn">Modifica Jucator</string>
     <string name="player_add_title">Adauga Jucator</string>
 
-    <string name="btn_delete">Sterge</string>
+    <string name="btn_delete">Dezactiveaza</string>
 
 
 </resources>

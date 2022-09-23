@@ -11,12 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.practice.myteams.databinding.FragmentPlayersBinding
 import com.practice.myteams.viewmodel.PlayersViewModel
 import com.practice.myteams.views.adapters.PlayerListAdapter
+import com.practice.myteams.views.dialogs.PlayerDialog
+import com.practice.myteams.views.dialogs.TeamDialog
 
 
-class PlayersFragment : Fragment() {
+class PlayersFragment : Fragment(), PlayerListAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentPlayersBinding
     private val viewModel: PlayersViewModel by viewModels()
+    private lateinit var playerListAdapter: PlayerListAdapter
+    private lateinit var dialogPlayer: PlayerDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +36,7 @@ class PlayersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvPlayersList.layoutManager = LinearLayoutManager(requireActivity())
-        val playerListAdapter = PlayerListAdapter(this)
+        playerListAdapter = PlayerListAdapter(this, this)
         binding.rvPlayersList.adapter = playerListAdapter
 
         binding.progressBar.visibility = View.VISIBLE
@@ -50,5 +54,10 @@ class PlayersFragment : Fragment() {
             }
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        dialogPlayer = PlayerDialog(false, playerListAdapter.players[position])
+        dialogPlayer.show(parentFragmentManager, dialogPlayer.tag)
     }
 }

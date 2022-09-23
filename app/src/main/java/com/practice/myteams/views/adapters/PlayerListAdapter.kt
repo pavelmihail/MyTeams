@@ -1,17 +1,17 @@
 package com.practice.myteams.views.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.practice.myteams.data.Player
-import com.practice.myteams.data.Team
 import com.practice.myteams.databinding.ItemPlayerCardBinding
-import com.practice.myteams.databinding.ItemTeamCardBinding
 
-class PlayerListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
+class PlayerListAdapter(private val fragment: Fragment, private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Player>() {
         override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
@@ -30,11 +30,21 @@ class PlayerListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<P
             differ.submitList(value)
         }
 
-    class ViewHolder(view: ItemPlayerCardBinding): RecyclerView.ViewHolder(view.root){
+    inner class ViewHolder(view: ItemPlayerCardBinding) : RecyclerView.ViewHolder(view.root),
+        View.OnClickListener {
         val tvPlayerFirstName = view.tvPlayerFirstName
         val tvPlayerLastName = view.tvPlayerLastName
         val tvPlayerIdTeam = view.tvPlayerIdTeam
         val tvPlayerIsActivate = view.cbPlayerIsActivate
+
+        init {
+            view.root.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            if (adapterPosition != RecyclerView.NO_POSITION)
+                listener.onItemClick(adapterPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,6 +63,10 @@ class PlayerListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<P
     }
 
     override fun getItemCount(): Int {
-        return  players.size
+        return players.size
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }
