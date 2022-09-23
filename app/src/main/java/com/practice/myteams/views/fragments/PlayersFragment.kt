@@ -39,6 +39,10 @@ class PlayersFragment : Fragment(), PlayerListAdapter.OnItemClickListener {
         playerListAdapter = PlayerListAdapter(this, this)
         binding.rvPlayersList.adapter = playerListAdapter
 
+        val pullToRefresh = binding.pullToRefresh
+
+        viewModel.getPlayer()
+
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getLiveDataObserver().observe(
             viewLifecycleOwner
@@ -53,6 +57,12 @@ class PlayersFragment : Fragment(), PlayerListAdapter.OnItemClickListener {
                 binding.noPlayersAddedYet.text = "Nu s-au putut aduce pachetele"
             }
             binding.progressBar.visibility = View.GONE
+        }
+
+        pullToRefresh.setOnRefreshListener {
+            viewModel.getPlayer()
+            playerListAdapter.notifyDataSetChanged()
+            pullToRefresh.isRefreshing = false
         }
     }
 

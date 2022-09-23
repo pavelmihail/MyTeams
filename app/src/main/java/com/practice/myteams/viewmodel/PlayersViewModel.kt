@@ -20,12 +20,8 @@ class PlayersViewModel : ViewModel() {
         return liveData
     }
 
-    init {
-        getPlayer()
-    }
-
     //    calls and error handling
-    private fun getPlayer() {
+    fun getPlayer() {
         viewModelScope.launch {
             val response = try {
                 RetrofitInstance.api.getPlayers()

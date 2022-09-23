@@ -40,6 +40,9 @@ class TeamsFragment : Fragment(), TeamListAdapter.OnItemClickListener {
         binding.rvTeamsList.layoutManager = LinearLayoutManager(requireActivity())
         teamListAdapter = TeamListAdapter(this, this)
         binding.rvTeamsList.adapter = teamListAdapter
+        val pullToRefresh = binding.pullToRefresh
+
+        viewModel.getTeams()
 
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getLiveDataObserver().observe(
@@ -55,6 +58,13 @@ class TeamsFragment : Fragment(), TeamListAdapter.OnItemClickListener {
                 binding.noTeamsAddedYet.text = "Nu s-au putut aduce pachetele"
             }
             binding.progressBar.visibility = View.GONE
+        }
+
+
+        pullToRefresh.setOnRefreshListener {
+            viewModel.getTeams()
+            teamListAdapter.notifyDataSetChanged()
+            pullToRefresh.isRefreshing = false
         }
     }
 

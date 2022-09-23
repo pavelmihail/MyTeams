@@ -20,12 +20,8 @@ class TeamsViewModel : ViewModel() {
         return liveData
     }
 
-    init {
-        getTeams()
-    }
-
     //    calls and error handling
-    private fun getTeams() {
+    fun getTeams() {
         viewModelScope.launch {
             val response = try {
                 api.getTeam()
