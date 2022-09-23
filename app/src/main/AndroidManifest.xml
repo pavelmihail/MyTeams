@@ -15,12 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTeams"
         tools:targetApi="31">
-        <activity
-            android:name=".views.activities.AddEditPlayerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.AddEditTeamActivity"
-            android:exported="false" />
+
         <activity
             android:name=".views.activities.SplashActivity"
             android:exported="true"

@@ -115,7 +115,7 @@ class PlayerDialog(
             if (it.SUCCESS) {
                 Toast.makeText(
                     requireContext(),
-                    "Echipa a fost postata cu succes!",
+                    "Jucatorul a fost adaugat cu succes!",
                     Toast.LENGTH_SHORT
                 ).show()
                 dialog?.dismiss()
