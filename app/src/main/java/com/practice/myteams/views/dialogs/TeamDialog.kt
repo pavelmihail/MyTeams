@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.practice.myteams.R
 import com.practice.myteams.data.Team
+import com.practice.myteams.data.TeamDeleteBody
+import com.practice.myteams.data.TeamPutBody
 import com.practice.myteams.data.TeamTransmit
 import com.practice.myteams.viewmodel.TeamDialogViewModel
 
@@ -47,6 +49,8 @@ class TeamDialog(
         val deleteButton = view.findViewById<Button>(R.id.btn_delete)
         val teamName = view.findViewById<MaterialAutoCompleteTextView>(R.id.team_name)
         val addTeam = TeamTransmit("")
+        val putTeam = TeamPutBody("", 0)
+        val deleteTeam = TeamDeleteBody(0)
 
         if (!isNew) {
             teamName.setText(toInsertTeam.DENUMIRE)
@@ -55,27 +59,31 @@ class TeamDialog(
         } else {
             sendButton.setText(R.string.team_add_btn)
             deleteButton.visibility = View.GONE
-
-
         }
 
         sendButton.setOnClickListener {
-            if(isNew){
-                if (teamName.text.isNotEmpty()) {
+            if(teamName.text.isNotEmpty()){
+                if (isNew) {
                     addTeam.DENUMIRE = teamName.text.toString()
-
                     viewModel.postTeam(addTeam)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Nu ai completat toate spatiile",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    putTeam.DENUMIRE = teamName.text.toString()
+                    putTeam.ID_ECHIPA = toInsertTeam.ID_ECHIPA
+                    viewModel.putTeam(putTeam)
                 }
             }else{
-                TODO("Implement DLETE and PUT")
+                Toast.makeText(
+                    requireContext(),
+                    "Nu ai completat toate spatiile",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
+        }
+
+        deleteButton.setOnClickListener{
+            deleteTeam.ID_ECHIPA = toInsertTeam.ID_ECHIPA
+            viewModel.deleteTeam(deleteTeam)
         }
 
         viewModel.getLiveDataObserver().observe(

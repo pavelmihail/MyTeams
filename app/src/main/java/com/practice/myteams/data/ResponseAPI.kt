@@ -1,6 +1,6 @@
 package com.practice.myteams.data
 
-data class PostResponse(
+data class ResponseAPI(
     val ERROR: ERROR,
     val SUCCESS: Boolean
 )

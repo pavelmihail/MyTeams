@@ -11,12 +11,15 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.practice.myteams.R
 import com.practice.myteams.data.Player
+import com.practice.myteams.data.PlayerDeleteBody
+import com.practice.myteams.data.PlayerPutBody
 import com.practice.myteams.data.PlayerTransmit
 import com.practice.myteams.viewmodel.PlayerDialogViewModel
 
 class PlayerDialog(
     private var isNew: Boolean = true,
-    private var toInsertPlayer: Player = Player(false,
+    private var toInsertPlayer: Player = Player(
+        false,
         "",
         "",
         "",
@@ -27,7 +30,8 @@ class PlayerDialog(
         "",
         "",
         1,
-        "")
+        ""
+    )
 ) : DialogFragment() {
 
     private val viewModel: PlayerDialogViewModel by viewModels()
@@ -47,15 +51,17 @@ class PlayerDialog(
         val sendButton = view.findViewById<Button>(R.id.btn_add_player)
         val deleteButton = view.findViewById<Button>(R.id.btn_delete_player)
         val playerLastName = view.findViewById<MaterialAutoCompleteTextView>(R.id.last_name_player)
-        val playerFistName = view.findViewById<MaterialAutoCompleteTextView>(R.id.first_name_player)
+        val playerFirstName = view.findViewById<MaterialAutoCompleteTextView>(R.id.first_name_player)
         val playerBirthDate = view.findViewById<MaterialAutoCompleteTextView>(R.id.birth_date)
         val teamId = view.findViewById<MaterialAutoCompleteTextView>(R.id.id_team)
 
         val addPlayer = PlayerTransmit("", "", "", 1)
+        val putPlayer = PlayerPutBody(0, "", "", "", 0)
+        val deletePlayer = PlayerDeleteBody(0)
 
         if (!isNew) {
             playerLastName.setText(toInsertPlayer.NUME)
-            playerFistName.setText(toInsertPlayer.PRENUME)
+            playerFirstName.setText(toInsertPlayer.PRENUME)
             playerBirthDate.setText(toInsertPlayer.DATA_NASTERE)
             teamId.setText(toInsertPlayer.ID_ECHIPA.toString())
             sendButton.setText(R.string.player_modify_btn)
@@ -63,32 +69,44 @@ class PlayerDialog(
         } else {
             sendButton.setText(R.string.team_add_btn)
             deleteButton.visibility = View.GONE
+        }
 
-            sendButton.setOnClickListener {
-                if (isNew){
-                    if (playerLastName.text.isNotEmpty() &&
-                        playerFistName.text.isNotEmpty() &&
-                        playerBirthDate.text.isNotEmpty() &&
-                        teamId.text.isNotEmpty()
-                    ) {
-                        addPlayer.NUME = playerLastName.text.toString()
-                        addPlayer.PRENUME = playerFistName.text.toString()
-                        addPlayer.DATA_NASTERE = playerBirthDate.text.toString()
-                        addPlayer.ID_ECHIPA = teamId.text.toString().toInt()
+        sendButton.setOnClickListener {
+            if (playerLastName.text.isNotEmpty() &&
+                playerFirstName.text.isNotEmpty() &&
+                playerBirthDate.text.isNotEmpty() &&
+                teamId.text.isNotEmpty())
+            {
+                if (isNew) {
+                    addPlayer.NUME = playerLastName.text.toString()
+                    addPlayer.PRENUME = playerFirstName.text.toString()
+                    addPlayer.DATA_NASTERE = playerBirthDate.text.toString()
+                    addPlayer.ID_ECHIPA = teamId.text.toString().toInt()
 
-                        viewModel.postPlayer(addPlayer)
+                    viewModel.postPlayer(addPlayer)
 
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Nu ai completat toate spatiile",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }else{
-                    TODO("Implement DELETE and PUT")
+                } else {
+                    putPlayer.ID_JUCATOR = toInsertPlayer.ID_JUCATOR
+                    putPlayer.NUME = playerLastName.text.toString()
+                    putPlayer.PRENUME = playerFirstName.text.toString()
+                    putPlayer.DATA_NASTERE = playerBirthDate.text.toString()
+                    putPlayer.ID_ECHIPA = teamId.text.toString().toInt()
 
-                }                }
+                    viewModel.putPlayer(putPlayer)
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Nu ai completat toate spatiile",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+        }
+
+        deleteButton.setOnClickListener{
+            deletePlayer.ID_JUCATOR = toInsertPlayer.ID_ECHIPA
+            viewModel.deletePlayer(deletePlayer)
         }
 
         viewModel.getLiveDataObserver().observe(
