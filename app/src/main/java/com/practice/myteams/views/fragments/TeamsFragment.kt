@@ -6,17 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.practice.myteams.databinding.FragmentTeamsBinding
 import com.practice.myteams.viewmodel.TeamsViewModel
 import com.practice.myteams.views.adapters.TeamListAdapter
+import com.practice.myteams.views.dialogs.TeamDialog
 
 class TeamsFragment : Fragment(), TeamListAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentTeamsBinding
     private val viewModel: TeamsViewModel by viewModels()
     private lateinit var teamListAdapter: TeamListAdapter
+    private lateinit var dialogTeam :  TeamDialog
 
 
     override fun onCreateView(
@@ -56,10 +59,7 @@ class TeamsFragment : Fragment(), TeamListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(
-            requireContext(),
-            "S-a apasat elementrul ${teamListAdapter.teams[position].ID_ECHIPA}",
-            Toast.LENGTH_LONG
-        ).show()
+        dialogTeam = TeamDialog(false, teamListAdapter.teams[position])
+        dialogTeam.show(parentFragmentManager, dialogTeam.tag)
     }
 }

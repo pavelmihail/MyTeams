@@ -10,10 +10,23 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.practice.myteams.R
+import com.practice.myteams.data.Team
 import com.practice.myteams.data.TeamTransmit
 import com.practice.myteams.viewmodel.TeamDialogViewModel
 
-class TeamDialog : DialogFragment() {
+class TeamDialog(
+    private var isNew: Boolean = true,
+    private var toInsertTeam: Team = Team(
+        false,
+        "",
+        "",
+        "",
+        1,
+        "",
+        1,
+        ""
+    )
+) : DialogFragment() {
 
     private val viewModel: TeamDialogViewModel by viewModels()
 
@@ -31,21 +44,36 @@ class TeamDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val sendButton = view.findViewById<Button>(R.id.btn_add_team)
+        val deleteButton = view.findViewById<Button>(R.id.btn_delete)
         val teamName = view.findViewById<MaterialAutoCompleteTextView>(R.id.team_name)
         val addTeam = TeamTransmit("")
 
+        if (!isNew) {
+            teamName.setText(toInsertTeam.DENUMIRE)
+            sendButton.setText(R.string.team_modify_btn)
+            deleteButton.visibility = View.VISIBLE
+        } else {
+            sendButton.setText(R.string.team_add_btn)
+            deleteButton.visibility = View.GONE
+
+
+        }
 
         sendButton.setOnClickListener {
-            if (teamName.text.isNotEmpty()) {
-                addTeam.DENUMIRE = teamName.text.toString()
+            if(isNew){
+                if (teamName.text.isNotEmpty()) {
+                    addTeam.DENUMIRE = teamName.text.toString()
 
-                viewModel.postTeam(addTeam)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Nu ai completat toate spatiile",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    viewModel.postTeam(addTeam)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Nu ai completat toate spatiile",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }else{
+                TODO("Implement DLETE and PUT")
             }
 
         }

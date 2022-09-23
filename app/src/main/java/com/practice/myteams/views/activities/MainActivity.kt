@@ -1,13 +1,7 @@
 package com.practice.myteams.views.activities
 
-import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
-import android.view.Window
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,7 +11,6 @@ import com.practice.myteams.R
 import com.practice.myteams.databinding.ActivityMainBinding
 import com.practice.myteams.views.dialogs.PlayerDialog
 import com.practice.myteams.views.dialogs.TeamDialog
-import retrofit2.http.Tag
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private var isPlayersFragmentOn = false
     private var isTeamsFragmentOn = false
 
-    private var dialogTeam =  TeamDialog()
+    private var dialogTeam =  TeamDialog(true)
     private var dialogPlayer =  PlayerDialog()
 
 
