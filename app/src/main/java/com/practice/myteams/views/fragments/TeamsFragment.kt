@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,10 +12,11 @@ import com.practice.myteams.databinding.FragmentTeamsBinding
 import com.practice.myteams.viewmodel.TeamsViewModel
 import com.practice.myteams.views.adapters.TeamListAdapter
 
-class TeamsFragment : Fragment() {
+class TeamsFragment : Fragment(), TeamListAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentTeamsBinding
     private val viewModel: TeamsViewModel by viewModels()
+    private lateinit var teamListAdapter: TeamListAdapter
 
 
     override fun onCreateView(
@@ -33,7 +35,7 @@ class TeamsFragment : Fragment() {
 
         //setup recycleView
         binding.rvTeamsList.layoutManager = LinearLayoutManager(requireActivity())
-        val teamListAdapter = TeamListAdapter(this)
+        teamListAdapter = TeamListAdapter(this, this)
         binding.rvTeamsList.adapter = teamListAdapter
 
         binding.progressBar.visibility = View.VISIBLE
@@ -51,5 +53,13 @@ class TeamsFragment : Fragment() {
             }
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(
+            requireContext(),
+            "S-a apasat elementrul ${teamListAdapter.teams[position].ID_ECHIPA}",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

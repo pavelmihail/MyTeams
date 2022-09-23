@@ -1,6 +1,7 @@
 package com.practice.myteams.views.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.practice.myteams.data.Team
 import com.practice.myteams.databinding.ItemTeamCardBinding
 
-class TeamListAdapter(private val fragment: Fragment) :
+class TeamListAdapter(private val fragment: Fragment, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<TeamListAdapter.ViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Team>() {
@@ -29,10 +30,20 @@ class TeamListAdapter(private val fragment: Fragment) :
             differ.submitList(value)
         }
 
-    class ViewHolder(view: ItemTeamCardBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ViewHolder(view: ItemTeamCardBinding) : RecyclerView.ViewHolder(view.root),
+        View.OnClickListener {
         val tvTeamName = view.tvTeamName
         val tvTeamId = view.tvTeamId
         val tvTeamIsActive = view.tvTeamIsActivate
+
+        init {
+            view.root.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            if(adapterPosition != RecyclerView.NO_POSITION)
+            listener.onItemClick(adapterPosition)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,5 +63,9 @@ class TeamListAdapter(private val fragment: Fragment) :
 
     override fun getItemCount(): Int {
         return teams.size
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }
